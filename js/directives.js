@@ -4,29 +4,35 @@ function templateCreator(templateClass, templateItem, templateDetail, header){
     return '<div class="api ' + templateClass + '" ng-show="showElem">' +
                 '<h3 class="api-header">' + header + '</h3>' +
                 '<ul class="api-items">' +
-                    '<li ng-repeat="item in data" ng-click="$emit(onFn.setActive, item)">' +
+                    '<li ng-repeat="item in data" ng-click="$emit(onFn.setActive, item)" class="animate-appears">' +
                         templateItem +
                     '</li>' +
                 '</ul>'+
-                '<div class="api-detail" ng-show="activeItem" ng-style="apiDetailStyle">' +
+                '<div class="api-detail animate-from-right" ng-show="activeItem" ng-style="apiDetailStyle">' +
                     '<div class="api-closeDetail"><span ng-click="closeDetail()">X</span></div>' +
                     templateDetail +
                 '</div>' +
             '<div>'
 }
 
-function scopeDecorator(scope, element, $rootScope, service){
+function scopeDecorator(scope, element, $rootScope, $window){
     var onFn = {
             setActive: 'setActive',
             hideOther: 'hideOther',
             setFeedCls: 'setFeedCls',
             showAll: 'showAll',
         }
-
+    var doc = document.documentElement, body = document.body;
+    var header = document.querySelector('header'), headerStyle = header.currentStyle || window.getComputedStyle(header), headerH = header.offsetHeight + parseInt(headerStyle.marginBottom) + parseInt(headerStyle.marginTop) - 5;
     scope.showElem = true
     scope.onFn = onFn
+    scope.apiDetailStyle = new Object;
 
     scope.$on(scope.onFn.setActive, function(e, item){
+        var scrollTop = (window.pageYOffset || doc.scrollTop)  - (doc.clientTop || 0) - headerH;
+        var top = (scrollTop > 0) ? scrollTop : 0
+        console.log(top)
+        scope.apiDetailStyle.top = top + 'px'
         scope.activeItem = item
         $rootScope.$broadcast(scope.onFn.hideOther, scope.$id);
         scope.$emit(scope.onFn.setFeedCls, true)
@@ -54,13 +60,6 @@ function scopeDecorator(scope, element, $rootScope, service){
         $rootScope.$broadcast(scope.onFn.showAll);
     }
 
-    if(service){
-        service.get(function(data){
-            scope.data = data
-            var w = element[0].offsetWidth;
-            scope.apiDetailStyle = {left: w + 'px', maxWidth: window.innerWidth - w - 100 + 'px'}
-        })
-    }
     return scope
 }
 
@@ -90,18 +89,12 @@ angular.module('appDirectives', [])
             replace: true,
             template: templateCreator('instagram', templateItem, templateDetail, templateHeader),
             link: function(scope, element, attrs){
-                scope = scopeDecorator(scope, element, $rootScope, instagramService)
+                scope = scopeDecorator(scope, element, $rootScope)
                 scope.onFn.removeTag = 'removeTag';
 
-                var tagSettings = {
-                    min: 1,
-                    step: 2,
-                }
-
-                var tags = ['coffee', 'cute', 'dilbert', 'cat', 'kitty', 'futurama', 'programming', 'book', 'food', 'fortran77', 'math', 'adventuretime', 'warhammer', 'catsplosion', 'linux', 'mlp', 'art', 'dwarf', 'cosmos', 'mario', 'heroes', 'tes', 'fallout', 'game', 'pokemon', 'funcy']
-
+                var tagSettings = {min: 1, step: 2, }
+                var tags = ['coffee', 'cute', 'dilbert', 'cat', 'kitty', 'futurama', 'programming', 'book', 'food', 'fortran77', 'math', 'adventuretime', 'warhammer', 'catsplosion', 'linux', 'mlp', 'art', 'dwarf', 'cosmos', 'mario', 'heroes', 'tes', 'fallout', 'game', 'pokemon', 'funcy', 'soup', 'foot', 'hand', 'glass', 'tennis', 'grass', 'ball', 'sport', 'puppy', 'horse', 'blues', 'jazz', 'reggae', 'cartoon', 'tardis', 'corgi', 'flower', 'nature', 'flcl', 'robot']
                 scope.tag = choice(tags)
-
 
                 scope.$watch('tag', function(val, oldval){
                     if( val && val.length > tagSettings.min){

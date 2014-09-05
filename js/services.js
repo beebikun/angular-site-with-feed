@@ -2,7 +2,6 @@
 
 var appServices = angular.module('appServices', []);
 
-/*appServices.factory('apiService')*/
 
 appServices.factory('instagramService', function($http){
     var id = 'd1a7f15414c44db38dd9f59938fcfd58';
