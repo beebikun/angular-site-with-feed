@@ -1,0 +1,216 @@
+ Skip to content
+This repository
+
+    Explore
+    Gist
+    Blog
+    Help
+
+    beebikun beebikun
+
+    1
+    0
+    0
+
+jumpow/HomeWork_1
+
+HomeWork_1 / styles.css
+Alexandr jumpow on 2 Mar
+Home Work for Unit 1
+
+1 contributor
+203 lines (180 sloc) 3.243 kb
+/* Reset and normolize:
+Makes browsers render all elements more consistently and in line with modern standards.
+Based on normalize.css v3.0.0 | MIT License | git.io/normalize
+*/
+/* Set box-sizing model */
+*, *:before, *:after {
+-webkit-box-sizing: border-box;
+-moz-box-sizing: border-box;
+box-sizing: border-box;
+}
+/**
+* 1. Set default font family to sans-serif.
+* 2. Prevent iOS text size adjust after orientation change, without disabling
+* user zoom.
+*/
+html {
+font-family: sans-serif; /* 1 */
+-ms-text-size-adjust: 100%; /* 2 */
+-webkit-text-size-adjust: 100%; /* 2 */
+}
+/**
+* Remove default margin.
+*/
+body {
+margin: 0;
+}
+/**
+* Correct `block` display not defined in IE 8/9.
+*/
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+nav,
+section,
+summary {
+display: block;
+}
+/**
+* Remove the gray background color from active links in IE 10.
+*/
+a {
+background: transparent;
+}
+/**
+* Improve readability when focused and also mouse hovered in all browsers.
+*/
+a:active,
+a:hover {
+outline: 0;
+}
+/**
+* Remove border when inside `a` element in IE 8/9.
+*/
+img {
+border: 0;
+}
+/**
+* 1. Correct color not being inherited.
+* Known issue: affects color of disabled elements.
+* 2. Correct font properties not being inherited.
+* 3. Address margins set differently in Firefox 4+, Safari 5, and Chrome.
+*/
+button,
+input,
+optgroup,
+select,
+textarea {
+color: inherit; /* 1 */
+font: inherit; /* 2 */
+margin: 0; /* 3 */
+}
+/**
+* Address `overflow` set to `hidden` in IE 8/9/10.
+*/
+button {
+overflow: visible;
+}
+/* Reset and normolize / End */
+.clearfix:before, .clearfix:after {
+content: " ";
+display: table;
+}
+.clearfix:after {
+clear: both;
+}
+.main-container {
+width: 100%;
+max-width: 1140px;
+margin: 0 auto;
+padding: 0 1em;
+}
+header {
+padding: 1em 0;
+}
+.logo, .search-form-holder, .user-account-nav {
+float: left;
+}
+.logo {
+width: 25%;
+}
+.logo h1{
+margin: 0;
+padding: 0.4em 0 0;
+font-size: 1.4em;
+text-transform: uppercase;
+}
+.search-form-holder {
+width: 35%;
+}
+.user-account-nav {
+width: 40%;
+}
+.search-form-holder input#q {
+width: 69%;
+}
+.unstyled-list {
+list-style: none;
+margin: 0;
+padding: 0;
+}
+.user-account-nav ul{
+float: right;
+}
+.user-account-nav ul li {
+float: left;
+padding: 0.5em;
+}
+.search-form-holder {
+padding-top: 0.5em;
+}
+.featured-product-holder {
+background: #f0f0f0;
+text-align: center;
+margin-bottom: 2em;
+padding: 1em 0;
+}
+.products-list-holder ul li {
+width: 33.33%;
+float: left;
+}
+.product-thumb {
+width: 33.33%;
+}
+.product-description-holder {
+width: 66.66%;
+padding: 0 1em;
+margin-bottom: 1em;
+}
+.product-thumb, .product-description-holder {
+float: left;
+}
+.product-thumb img {
+width: 100%;
+max-width: 100%;
+height: auto;
+}
+.product-description-holder h2 {
+margin: 0;
+padding: 0;
+}
+footer {
+width: 100%;
+float: left;
+padding: 2em 0;
+text-align: center;
+}
+footer a {
+display: inline-block;
+padding: 0.5em;
+}
+[placeholder]:focus::-webkit-input-placeholder {
+transition: opacity 0.5s 0.5s ease;
+opacity: 0;
+}
+
+    Status
+    API
+    Training
+    Shop
+    Blog
+    About
+
+    © 2014 GitHub, Inc.
+    Terms
+    Privacy
+    Security
+    Contact
+
