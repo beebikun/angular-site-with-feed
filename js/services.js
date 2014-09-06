@@ -18,3 +18,16 @@ appServices.factory('instagramService', function($http){
 
 });
 
+appServices.factory('tumblrService', function($http){
+    var key = 'fuiKNFp9vQFvjLNvx4sUwti4Yb5yGutBN4Xh10LXZhhRKjWlV4';
+    return {
+        get: function(callback, tag){
+            var endPoint = "http://api.tumblr.com/v2/tagged?tag=" + tag + "&api_key=" + key + "&callback=JSON_CALLBACK";
+            $http.jsonp(endPoint).success(function(response){
+                callback(response.response.filter(function(item){return item.type == "photo"}));
+            });
+        }
+    }
+
+});
+
