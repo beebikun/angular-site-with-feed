@@ -1,0 +1,68 @@
+$apiVal: 3;
+
+$inputNormalWidth: 100px;
+
+$colorBgBlue: #02b8d8;
+
+$colorTextShBlue: #0199d9;
+
+$colorShLight: rgba(180,180,180,0.7);
+
+$colorTextGray: #444;
+$colorTextLightGray: #888;
+
+$fontGruppo: normal 1.8em/1 "Gruppo", Helvetica, sans-serif;
+$fontUltra: normal 60px/1 "Ultra", Helvetica, sans-serif;
+
+
+@mixin text-shadow-deep($clrShadow) {
+    text-shadow: 3px 3px 0 $clrShadow , 4px 4px 0 $clrShadow, 5px 5px 0 $clrShadow, 6px 6px 0 $clrShadow, 7px 7px 0 $clrShadow, 8px 8px 0 $clrShadow, 9px 9px 0 $clrShadow, 10px 10px 0 $clrShadow, 11px 11px 0 $clrShadow, 12px 12px 0 $clrShadow, 13px 13px 0 $clrShadow, 14px 14px 0 $clrShadow, 15px 15px 0 $clrShadow, 16px 16px 0 $clrShadow, 17px 17px 0 $clrShadow, 18px 18px 0 $clrShadow, 19px 19px 0 $clrShadow, 20px 20px 0 $clrShadow; }
+
+@mixin box-shadow($sh){
+    -webkit-box-shadow: $sh;
+    box-shadow: $sh;
+}
+
+@mixin bordered-box{
+    @include box-shadow(0 0 2px 2px $colorShLight);
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+@mixin no-highlight{
+    @include box-shadow(none);
+        border: none;
+        outline: none;
+}
+
+@mixin no-ul-format{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+@mixin placeholder($cls){
+    color: $cls;
+    opacity: 1;
+}
+
+@mixin transition-liear($t){
+    -webkit-transition:$t linear all;
+    -moz-transition:$t linear all;
+    -o-transition:$t linear all;
+    transition:$t linear all;
+}
+
+
+@mixin transition-cubic-bezier($t){
+    -webkit-transition: all $t cubic-bezier(0.68, -0.75, 0.265, 1.75);
+    -moz-transition: all $t cubic-bezier(0.68, -0.75, 0.265, 1.75);
+    -o-transition: all $t cubic-bezier(0.68, -0.75, 0.265, 1.75);
+    transition: all $t cubic-bezier(0.68, -0.75, 0.265, 1.75);
+}
+
+@mixin transform($transform){
+    -ms-transform: $transform; /* IE 9 */
+    -webkit-transform: $transform; /* Chrome, Safari, Opera */
+    transform: $transform;
+}

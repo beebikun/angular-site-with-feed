@@ -1,0 +1,114 @@
+@import 'main-template';
+
+header{
+    background-color: $colorBgBlue;
+    color: #fff;
+    padding: 5px 20%;
+    margin-bottom: 30px;
+
+    p{
+        font: $fontGruppo;
+        text-shadow: 1px 1px 0 $colorShLight;
+        margin: 0;
+        margin-bottom: 10px;
+        text-align: right;
+    }
+
+    h1{
+        @include text-shadow-deep($colorTextShBlue);
+        margin: 0;
+        padding: 25px;
+        font: $fontUltra;
+        color: #fff;
+        text-align: center;
+    }
+}
+
+.api-feed{
+    text-align: center;
+    position: relative;
+}
+
+.showDetail.api-feed{
+    text-align: left!important;
+}
+
+
+.api{
+    @include bordered-box;
+    display: inline-block;
+    width: 100%/$apiVal - 7%;
+    margin-right: 5px;
+    margin-left: 5px;
+    padding: 0 10px;
+    text-align: center;
+    vertical-align: top;
+
+    img{
+        max-width: 100%;
+        max-height: 100%;
+    }
+
+    *{
+        @include transition-liear(.5s);
+    }
+
+    .api-header{
+        @include box-shadow(0 4px 2px -2px $colorShLight);
+        margin: 0;
+        padding: 1em 0;
+        margin-bottom: 20px;
+        color: $colorTextGray;
+        text-align: center;
+        cursor: pointer;
+    }
+
+
+    .api-header input{
+        border: none;
+        border-bottom: 3px dotted;
+        color: $colorTextLightGray;
+        width: $inputNormalWidth;
+
+        :focus{
+            @include no-highlight;
+            border-bottom: 3px dashed;
+            border-color: $colorBgBlue;
+        }
+    }
+
+    .api-items{
+        @include no-ul-format;
+        text-align: center;
+
+        li{
+            cursor: pointer;
+        }
+    }
+
+    .api-detail{
+        @include bordered-box;
+        position: absolute;
+        margin: 0 20px;
+        padding: 20px;
+        top: 0;
+
+        .api-closeDetail{
+            text-align: right;
+            margin-bottom: 10px;
+
+            span{
+                cursor: pointer;
+            }
+
+            span:hover{
+                font-weight: bold;
+            }
+        }
+
+    }
+
+}
+
+@import 'ng-animate';
+@import 'api-tagable';
