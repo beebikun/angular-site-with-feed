@@ -104,7 +104,7 @@ APIfeedScopeDecorators.prototype.mainDecorator = function() {
     scope.addTag = function(e){
         var key = e.keyCode || e.which;
         if(key == 13){
-            service.getActiveTags().push(scope.newTag);
+            service.getActiveTags(scope.activeItem).push(scope.newTag);
             scope.newTag = ''
             var input = e.srcElement || e.target;
             input.blur()
@@ -112,7 +112,7 @@ APIfeedScopeDecorators.prototype.mainDecorator = function() {
     }
 
     scope.$on(scope.onFn.removeTag, function(e, tag){
-        var tags = service.getActiveTags()
+        var tags = service.getActiveTags(scope.activeItem);
         var index = tags.indexOf(tag);
         if (index > -1) {
             tags.splice(index, 1);
@@ -145,7 +145,7 @@ angular.module('appDirectives', [])
             link: function(scope, element, attrs){
                 var decorators = new APIfeedScopeDecorators(scope, element, $rootScope)
                 decorators.mainDecorator()
-                instagramService.getActiveTags = function(){return scope.activeItem.tags}
+                instagramService.getActiveTags = function(item){return item.tags}
                 decorators.tagableDecorator(instagramService)
             }
         }
@@ -171,7 +171,7 @@ angular.module('appDirectives', [])
             link: function(scope, element, attrs){
                 var decorators = new APIfeedScopeDecorators(scope, element, $rootScope)
                 decorators.mainDecorator()
-                tumblrService.getActiveTags = function(){return scope.activeItem.tags}
+                tumblrService.getActiveTags = function(item){return item.tags}
                 decorators.tagableDecorator(tumblrService)
 
                 scope.getThumbPhotoUrl = function(item){

@@ -1,5 +1,4 @@
 module.exports = function(grunt) {
-    var src = ['js/services.js', 'js/app.js', 'js/directives.js', 'js/controllers.js'];
   // Project configuration.
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
@@ -9,18 +8,19 @@ module.exports = function(grunt) {
                 report: 'min',
                 mangle: false
             },
-            build:{
-                src: src,
-                dest: 'build/<%= pkg.name %>.min.js'
-            },
+            dist: {
+                files: {
+                  'build/<%= pkg.name %>.min.js': ['<%= concat.dist.dest %>']
+                }
+              }
         },
         concat: {
             options: {
                 separator: ";",
                 banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
             },
-            build:{
-                src: src,
+            dist:{
+                src: ['js/*.js'],
                 dest: 'build/<%= pkg.name %>.js'
             }
         }

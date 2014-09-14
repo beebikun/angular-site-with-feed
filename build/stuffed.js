@@ -1,38 +1,5 @@
-/*! stuffed 2014-09-06 */
+/*! stuffed 2014-09-14 */
 'use strict';
-
-var appServices = angular.module('appServices', []);
-
-
-appServices.factory('instagramService', function($http){
-    var id = 'd1a7f15414c44db38dd9f59938fcfd58';
-    var secret = '53dea990566e48b7b5ffddf00fb44333';
-    var is_recent = true
-    return {
-        get: function(callback, tag){
-            var endPoint = "https://api.instagram.com/v1/" + (tag ? 'tags/' + tag + '/' : '') + "media/"+ (is_recent ? 'recent' : 'popular') + "?client_id=" + id + "&callback=JSON_CALLBACK";
-            $http.jsonp(endPoint).success(function(response){
-                callback(response.data);
-            });
-        }
-    }
-
-});
-
-appServices.factory('tumblrService', function($http){
-    var key = 'fuiKNFp9vQFvjLNvx4sUwti4Yb5yGutBN4Xh10LXZhhRKjWlV4';
-    return {
-        get: function(callback, tag){
-            var endPoint = "http://api.tumblr.com/v2/tagged?tag=" + tag + "&api_key=" + key + "&callback=JSON_CALLBACK";
-            $http.jsonp(endPoint).success(function(response){
-                callback(response.response.filter(function(item){return item.type == "photo"}));
-            });
-        }
-    }
-
-});
-
-;'use strict';
 
 angular.module('app', [
     'appServices',
@@ -44,6 +11,15 @@ angular.module('app', [
 
 
 
+;'use strict';
+
+function MasterController($scope) {
+    $scope.feedCls = ''
+
+    $scope.$on('setFeedCls', function(e, val){
+        $scope.feedCls = val ? 'showDetail' : ''
+    });
+}
 ;'use strict';
 
 function templateCreator(templateClass, templateItem, templateDetail, header){
@@ -150,7 +126,7 @@ APIfeedScopeDecorators.prototype.mainDecorator = function() {
     scope.addTag = function(e){
         var key = e.keyCode || e.which;
         if(key == 13){
-            service.getActiveTags().push(scope.newTag);
+            service.getActiveTags(scope.activeItem).push(scope.newTag);
             scope.newTag = ''
             var input = e.srcElement || e.target;
             input.blur()
@@ -158,7 +134,7 @@ APIfeedScopeDecorators.prototype.mainDecorator = function() {
     }
 
     scope.$on(scope.onFn.removeTag, function(e, tag){
-        var tags = service.getActiveTags()
+        var tags = service.getActiveTags(scope.activeItem);
         var index = tags.indexOf(tag);
         if (index > -1) {
             tags.splice(index, 1);
@@ -191,7 +167,7 @@ angular.module('appDirectives', [])
             link: function(scope, element, attrs){
                 var decorators = new APIfeedScopeDecorators(scope, element, $rootScope)
                 decorators.mainDecorator()
-                instagramService.getActiveTags = function(){return scope.activeItem.tags}
+                instagramService.getActiveTags = function(item){return item.tags}
                 decorators.tagableDecorator(instagramService)
             }
         }
@@ -217,7 +193,7 @@ angular.module('appDirectives', [])
             link: function(scope, element, attrs){
                 var decorators = new APIfeedScopeDecorators(scope, element, $rootScope)
                 decorators.mainDecorator()
-                tumblrService.getActiveTags = function(){return scope.activeItem.tags}
+                tumblrService.getActiveTags = function(item){return item.tags}
                 decorators.tagableDecorator(tumblrService)
 
                 scope.getThumbPhotoUrl = function(item){
@@ -229,10 +205,34 @@ angular.module('appDirectives', [])
         }
     });'use strict';
 
-function MasterController($scope) {
-    $scope.feedCls = ''
+var appServices = angular.module('appServices', []);
 
-    $scope.$on('setFeedCls', function(e, val){
-        $scope.feedCls = val ? 'showDetail' : ''
-    });
-}
+
+appServices.factory('instagramService', function($http){
+    var id = 'd1a7f15414c44db38dd9f59938fcfd58';
+    var secret = '53dea990566e48b7b5ffddf00fb44333';
+    var is_recent = true
+    return {
+        get: function(callback, tag){
+            var endPoint = "https://api.instagram.com/v1/" + (tag ? 'tags/' + tag + '/' : '') + "media/"+ (is_recent ? 'recent' : 'popular') + "?client_id=" + id + "&callback=JSON_CALLBACK";
+            $http.jsonp(endPoint).success(function(response){
+                callback(response.data);
+            });
+        }
+    }
+
+});
+
+appServices.factory('tumblrService', function($http){
+    var key = 'fuiKNFp9vQFvjLNvx4sUwti4Yb5yGutBN4Xh10LXZhhRKjWlV4';
+    return {
+        get: function(callback, tag){
+            var endPoint = "http://api.tumblr.com/v2/tagged?tag=" + tag + "&api_key=" + key + "&callback=JSON_CALLBACK";
+            $http.jsonp(endPoint).success(function(response){
+                callback(response.response.filter(function(item){return item.type == "photo"}));
+            });
+        }
+    }
+
+});
+
